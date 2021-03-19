@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 
 import {Select, Input} from '../Form';
+import {tipValues, vatValues} from "../../data";
 
 function Bill() {
     const [bill, setBill] = useState(0),
@@ -8,19 +9,7 @@ function Bill() {
         tip = useRef(),
         vat = useRef(),
         billForm = useRef(),
-        billWrapper = useRef(),
-        tipValues = [
-            {value: 0, label: '0%'},
-            {value: 5, label: '5%'},
-            {value: 10, label: '10%'},
-            {value: 15, label: '15%'},
-            {value: 20, label: '20%'}
-        ],
-        vatValues = [
-            {value: 5, label: '5%'},
-            {value: 8, label: '8%'},
-            {value: 25, label: '25%'}
-        ];
+        billWrapper = useRef();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -51,7 +40,7 @@ function Bill() {
         <>
             <h2>1. Przeliczanie rachunku w restauracji (funkcyjne)</h2>
             <form ref={billForm} onSubmit={handleSubmit}>
-                <Input ref={amount} type="number" name="amount" placeholder="Kwota netto" other='step="0.01" min="0"'/>
+                <Input ref={amount} type="number" name="amount" placeholder="Kwota netto" step="0.01" min="0"/>
                 <Select name="tip" options={tipValues} ref={tip} label="Napiwek (z kwoty brutto)"/>
                 <Select name="vat" options={vatValues} ref={vat} label="Vat"/>
                 <button type="submit">Przelicz</button>
