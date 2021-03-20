@@ -3,10 +3,30 @@ body {
     text-align: center;
 }
 
-form select, form input {
+form select, form input, form textarea {
     margin: 0 10px;
 }
 
 .bill-wrapper {
     display: none;
+}
+
+.user-form {
+    border: 1px solid black;
+    margin: 0 30%;
+    padding: 30px 0;
+    text-align: right;
+}
+
+.user-form div {
+    margin: 10px;
+}
+
+.user-form  label {
+    font-weight: bold;
+}
+
+span.warning {
+    color: red;
+    margin-right: 10px;
 }

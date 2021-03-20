@@ -46,16 +46,16 @@ class BillClass extends React.Component {
     render() {
         return (
             <>
-                <h2>1a. Przeliczanie rachunku w restauracji (klasowe)</h2>
+                <h2>1a. Calculate bill (class)</h2>
                 <form ref={this.billForm} onSubmit={this.handleSubmit}>
-                    <Input ref={this.amount} type="number" name="amount" placeholder="Kwota netto" step="0.01" min="0"/>
-                    <Select name="tip" options={tipValues} ref={this.tip} label="Napiwek (z kwoty brutto)"/>
-                    <Select name="vat" options={vatValues} ref={this.vat} label="Vat"/>
-                    <button type="submit">Przelicz</button>
+                    <Input ref={this.amount} type="number" name="amount" placeholder="Amount excl. tax" step="0.01" min="0"/>
+                    <Select name="tip" options={tipValues} ref={this.tip} label="Tip (from amount with tax)"/>
+                    <Select name="vat" options={vatValues} ref={this.vat} label="Tax"/>
+                    <button type="submit">Calculate</button>
                 </form>
                 <div className="bill-wrapper" ref={this.billWrapper}>
-                    <div>Do zapłaty: {this.state.bill} brutto</div>
-                    <button onClick={this.recalculate}>Przelicz ponownie</button>
+                    <div>Total amount with tax: {this.state.bill}</div>
+                    <button onClick={this.recalculate}>Recaluclate</button>
                 </div>
             </>
         );

@@ -16,7 +16,7 @@ function Bill() {
         const amountValue = parseFloat(amount.current.value);
 
         if (!amountValue) {
-            alert('Wprowadż Kwotę!');
+            alert('Amount cannot be empty!');
             return;
         }
 
@@ -38,16 +38,16 @@ function Bill() {
 
     return (
         <>
-            <h2>1. Przeliczanie rachunku w restauracji (funkcyjne)</h2>
+            <h2>1. Calculate bill (function)</h2>
             <form ref={billForm} onSubmit={handleSubmit}>
-                <Input ref={amount} type="number" name="amount" placeholder="Kwota netto" step="0.01" min="0"/>
-                <Select name="tip" options={tipValues} ref={tip} label="Napiwek (z kwoty brutto)"/>
-                <Select name="vat" options={vatValues} ref={vat} label="Vat"/>
-                <button type="submit">Przelicz</button>
+                <Input ref={amount} type="number" name="amount" placeholder="Amount excl. tax" step="0.01" min="0"/>
+                <Select name="tip" options={tipValues} ref={tip} label="Tip (from amount with tax)"/>
+                <Select name="vat" options={vatValues} ref={vat} label="Tax"/>
+                <button type="submit">Calculate</button>
             </form>
             <div className="bill-wrapper" ref={billWrapper}>
-                <div>Do zapłaty: {bill} brutto</div>
-                <button onClick={recalculate}>Przelicz ponownie</button>
+                <div>Total amount with tax: {bill}</div>
+                <button onClick={recalculate}>Recalculate</button>
             </div>
         </>
     );

@@ -1,15 +1,19 @@
 import React from 'react';
 
 const Input = React.forwardRef((props, ref) => {
-    const {type, name, placeholder, ...other} = props;
+    const {type, name, placeholder, label, ...other} = props;
 
     return (
-        <input type={type} name={name} ref={ref} placeholder={placeholder} {...other}/>
+        <>
+            <label>{label}</label>
+            <input type={type} name={name} ref={ref} placeholder={placeholder} {...other}/>
+        </>
     );
 });
 
 Input.defaultProps = {
-    type: 'text'
+    type: 'text',
+    label: ''
 }
 
 export default Input;
