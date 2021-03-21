@@ -5,14 +5,16 @@ import Bill from "./components/Bill";
 import BillClass from "./components/BillClass";
 import Form from "./pages/Form";
 import HookForm from "./pages/HookForm";
+import ExpenseCalculator from "./pages/ExpenseCalculator"
 
 function App() {
     return (
         <>
-            <Bill/>
-            <BillClass/>
-            <Form/>
+            <ExpenseCalculator/>
             <HookForm/>
+            <Form/>
+            <BillClass/>
+            <Bill/>
         </>
     );
 }

@@ -6,7 +6,7 @@ import {Input, Textarea} from '../components/Form';
 function HookForm() {
     const form = useRef();
 
-    const {register, handleSubmit, setError, errors} = useForm();
+    const {register, handleSubmit, errors} = useForm();
     const onSubmit = data => {
         alert('Thank you for submit.')
         form.current.reset();

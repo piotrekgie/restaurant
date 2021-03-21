@@ -30,3 +30,36 @@ span.warning {
     color: red;
     margin-right: 10px;
 }
+
+.form-wrapper {
+    display: flex;
+}
+
+.form-wrapper form {
+    margin: 0 auto;
+}
+
+.radio-wrapper h4 {
+    margin: 10px;
+}
+
+.list-wrapper, .form-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-wrapper > div, .form-wrapper > div {
+    width: 50%;
+}
+
+.list-wrapper table {
+    width: 98%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
