@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 
 import {Input, Select} from "../components/Form";
 import {calculatorCategories} from "../data/calculatorCategories";
+import addToStorage from "../components/Utils/addToStorage";
 // import {revenues} from "../data/revenues";
 // import {expenses} from "../data/expenses";
 
@@ -12,18 +13,36 @@ function ExpenseCalculator() {
     const expensesList = useRef();
     const form = useRef();
     const removeItem = (event) => {event.target.parentNode.parentNode.remove();}
-    const removeButton = <button title="Remove" onClick={removeItem}>Remove</button>;
     let revenues = [
-        ['XYZ - mockups', 2000, 'Development', removeButton],
-        ['ABC - blog', 1500, 'Development', removeButton],
-        ['Home1', 1000, 'Rent', removeButton],
-        ['Home2', 1300, 'Rent', removeButton]
+        ['XYZ - mockups', 2000, 'Development'],
+        ['ABC - blog', 1500, 'Development'],
+        ['Home1', 1000, 'Rent'],
+        ['Home2', 1300, 'Rent']
     ];
+
     let expenses = [
-        ['Pizza', 100, 'Food', removeButton],
-        ['Fuel', 200, 'Car', removeButton],
-        ['Hosting', 200, 'Business', removeButton]
+        ['Pizza', 100, 'Food'],
+        ['Fuel', 200, 'Car'],
+        ['Hosting', 200, 'Business']
     ];
+
+    let revenueStorage = localStorage.getItem('revenue');
+
+    if (revenueStorage) {
+        let revenueStorageArray = JSON.parse(revenueStorage);
+        revenueStorageArray.map((row) => {
+            return revenues.push(row);
+        })
+    }
+
+    let expenseStorage = localStorage.getItem('expense');
+
+    if (expenseStorage) {
+        let expenseStorageArray = JSON.parse(expenseStorage);
+        expenseStorageArray.map((row) => {
+            return expenses.push(row);
+        })
+    }
 
     let totalRevenues = 0;
     revenues.forEach(item => {totalRevenues += item[1]});
@@ -31,21 +50,15 @@ function ExpenseCalculator() {
     let totalExpenses = 0;
     expenses.forEach(item => {totalExpenses += item[1]});
 
-    // Podczas zaimportowania tych tablic (linie 5 i 6) i użycia poniższego kodu przycisk do usuwania pojawia się dwa razy, czemu?
-    // revenues.map((elem) => {
-    //     elem.push(removeButton);
-    // })
-    // expenses.map((elem) => {
-    //     elem.push(removeButton);
-    // })
-
     const [revenueRows, setRevenueRows] = useState(revenues);
     const [expenseRows, setExpenseRows] = useState(expenses);
     const [total, setTotal] = useState(totalRevenues - totalExpenses);
 
     const onSubmit = data => {
-        const rowData = [data.name, data.amount, data.category, removeButton];
+        const rowData = [data.name, data.amount, data.category];
         let amount = data.amount;
+
+        addToStorage(data.type, rowData);
 
         if (data.type === 'revenue') {
             revenueRows.push(rowData);
@@ -115,10 +128,13 @@ function ExpenseCalculator() {
                             </thead>
                             <tbody ref={revenuesList}>
                             {revenueRows.map((row, index) => (
-                                <tr key={index}>
+                                <tr id={`revenue-row-${index}`} key={index}>
                                     {row.map((value, indexValue) => (
                                         <td key={indexValue}>{value}</td>
                                     ))}
+                                    <td>
+                                        <button title="Remove" onClick={removeItem}>Remove</button>
+                                    </td>
                                 </tr>
                             ))}
                             </tbody>
@@ -139,10 +155,13 @@ function ExpenseCalculator() {
                             </thead>
                             <tbody ref={expensesList}>
                             {expenseRows.map((row, index) => (
-                                <tr key={index}>
+                                <tr id={`expense-row-${index}`} key={index}>
                                     {row.map((value, indexValue) => (
                                         <td key={indexValue}>{value}</td>
                                     ))}
+                                    <td>
+                                        <button title="Remove" onClick={removeItem}>Remove</button>
+                                    </td>
                                 </tr>
                             ))}
                             </tbody>
