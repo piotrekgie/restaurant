@@ -4,15 +4,16 @@ import {useForm} from "react-hook-form";
 import {Input, Select} from "../components/Form";
 import {calculatorCategories} from "../data/calculatorCategories";
 import addToStorage from "../components/Utils/addToStorage";
-// import {revenues} from "../data/revenues";
-// import {expenses} from "../data/expenses";
 
 function ExpenseCalculator() {
     const {register, handleSubmit, errors} = useForm();
     const revenuesList = useRef();
     const expensesList = useRef();
     const form = useRef();
+
+    /* @todo Add removing from local storage add change summary amount*/
     const removeItem = (event) => {event.target.parentNode.parentNode.remove();}
+
     let revenues = [
         ['XYZ - mockups', 2000, 'Development'],
         ['ABC - blog', 1500, 'Development'],
