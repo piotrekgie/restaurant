@@ -13,7 +13,8 @@ function App() {
             <ExpenseCalculator/>
             <HookForm/>
             <Form/>
-            <BillClass/>
+            {/* Zakomentowane, ponieważ sandbox się krzaczy, nie wiem czemu :/ */}
+            {/*<BillClass/>*/}
             <Bill/>
         </>
     );
