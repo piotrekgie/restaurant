@@ -22,7 +22,7 @@ form select, form input, form textarea {
     margin: 10px;
 }
 
-.user-form  label {
+.user-form label {
     font-weight: bold;
 }
 
@@ -62,4 +62,8 @@ table {
 
 table, td, th {
     border: 1px solid black;
+}
+
+table td:nth-child(1) {
+    display: none;
 }
