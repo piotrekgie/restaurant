@@ -6,39 +6,49 @@ import {tipValues, vatValues} from "../../data";
 class BillClass extends React.Component {
     constructor(props) {
         super(props);
-
-        this.amount = createRef();
-        this.tip = createRef();
-        this.vat = createRef();
         this.billForm = createRef();
         this.billWrapper = createRef();
     }
 
     state = {
-        bill: 0
+        bill: 0,
+        amount: '',
+        tip: tipValues[0].value,
+        vat: vatValues[0].value
     };
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const amountValue = parseFloat(this.amount.current.value);
+    handleChange = (e) => {
+        const {name, value} = e.target;
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const amountValue = parseFloat(this.state.amount);
 
         if (!amountValue) {
             alert('Wprowadż Kwotę!');
             return;
         }
 
-        let valueWithVat = amountValue + parseFloat(this.vat.current.value) * amountValue / 100,
-            tipValue = parseFloat(this.tip.current.value) * valueWithVat / 100;
+        let valueWithVat = amountValue + parseFloat(this.state.vat) * amountValue / 100,
+            tipValue = parseFloat(this.state.tip) * valueWithVat / 100;
 
-        this.setState({bill: (tipValue + valueWithVat).toFixed(2)});
+        this.setState({
+            bill: (tipValue + valueWithVat).toFixed(2)
+        });
         this.billForm.current.style.display = 'none';
         this.billWrapper.current.style.display = 'block';
     }
 
     recalculate = () => {
-        this.amount.current.value = '';
-        this.tip.current.value = tipValues[0].value;
-        this.vat.current.value = vatValues[0].value;
+        this.setState({
+            amount: '',
+            tip: tipValues[0].value,
+            vat: vatValues[0].value
+        });
         this.billForm.current.style.display = 'block';
         this.billWrapper.current.style.display = 'none';
     }
@@ -48,9 +58,9 @@ class BillClass extends React.Component {
             <>
                 <h2>1a. Calculate bill (class)</h2>
                 <form ref={this.billForm} onSubmit={this.handleSubmit}>
-                    <Input ref={this.amount} type="number" name="amount" placeholder="Amount excl. tax" step="0.01" min="0"/>
-                    <Select name="tip" options={tipValues} ref={this.tip} label="Tip (from amount with tax)"/>
-                    <Select name="vat" options={vatValues} ref={this.vat} label="Tax"/>
+                    <Input name="amount" value={this.state.amount} type="number" placeholder="Amount excl. tax" step="0.01" min="0" onChange={this.handleChange}/>
+                    <Select name="tip" options={tipValues} label="Tip (from amount with tax)" selectedValue={this.state.tip} onChange={this.handleChange}/>
+                    <Select name="vat" options={vatValues} label="Tax" selectedValue={this.state.vat} onChange={this.handleChange}/>
                     <button type="submit">Calculate</button>
                 </form>
                 <div className="bill-wrapper" ref={this.billWrapper}>
