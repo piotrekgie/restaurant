@@ -14,7 +14,7 @@ function App() {
             <HookForm/>
             <Form/>
             {/* Zakomentowane, ponieważ sandbox się krzaczy, nie wiem czemu :/ */}
-            {/*<BillClass/>*/}
+            <BillClass/>
             <Bill/>
         </>
     );
