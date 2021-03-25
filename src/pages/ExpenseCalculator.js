@@ -14,8 +14,8 @@ function ExpenseCalculator() {
     const [expenses, setExpenses] = useState(expensesData);
     const {register, handleSubmit, errors} = useForm();
     const [total, setTotal] = useState(0);
-    const [revenueStorage, setRevenueStorage] = useState(localStorage.getItem('revenue'));
-    const [expenseStorage, setEDxpenseStorage] = useState(localStorage.getItem('expense'));
+    const [revenueStorage] = useState(localStorage.getItem('revenue'));
+    const [expenseStorage] = useState(localStorage.getItem('expense'));
     const form = useRef();
 
     useEffect(
@@ -45,8 +45,7 @@ function ExpenseCalculator() {
         }, [revenueStorage]
     )
 
-    useEffect(
-        () => {
+    useEffect(() => {
             if (expenseStorage) {
                 let expenseStorageArray = JSON.parse(expenseStorage);
                 expenseStorageArray.map((row) => {
