@@ -5,6 +5,7 @@ import {revenuesData} from "../data/revenues";
 import {expensesData} from "../data/expenses";
 import {Input, Select} from "../components/Form";
 import {calculatorCategories} from "../data/calculatorCategories";
+import CalculatorTable from "../components/CalculatorTable";
 import addToStorage from "../components/Utils/addToStorage";
 import removeFromStorage from "../components/Utils/removeFromStorage";
 
@@ -15,8 +16,6 @@ function ExpenseCalculator() {
     const [total, setTotal] = useState(0);
     const [revenueStorage, setRevenueStorage] = useState(localStorage.getItem('revenue'));
     const [expenseStorage, setEDxpenseStorage] = useState(localStorage.getItem('expense'));
-    const revenuesList = useRef();
-    const expensesList = useRef();
     const form = useRef();
 
     useEffect(
@@ -57,7 +56,6 @@ function ExpenseCalculator() {
         }, [expenseStorage]
     )
 
-    /* @todo Add removing from local storage*/
     const removeItem = (index, type) => {
         if (type === 'expense') {
             removeFromStorage(type, expenses[index]);
@@ -138,60 +136,8 @@ function ExpenseCalculator() {
                 </div>
             </div>
             <div className="list-wrapper">
-                {revenues.length > 0 &&
-                <div>
-                    <h3>Revenues</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody ref={revenuesList}>
-                        {revenues.map((row, index) => (
-                            <tr id={`revenue-row-${index}`} key={index}>
-                                {Object.keys(row).map((value, indexValue) => (
-                                    <td key={indexValue}>{row[value]}</td>
-                                ))}
-                                <td>
-                                    <button title="Remove" onClick={(e) => removeItem(index, 'revenue')}>Remove</button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-                }
-                {expenses.length > 0 &&
-                <div>
-                    <h3>Expenses</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody ref={expensesList}>
-                        {expenses.map((row, index) => (
-                            <tr id={`expense-row-${index}`} key={index}>
-                                {Object.keys(row).map((value, indexValue) => (
-                                    <td key={indexValue}>{row[value]}</td>
-                                ))}
-                                <td>
-                                    <button title="Remove" onClick={(e) => removeItem(index, 'expense')}>Remove</button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-                }
+                <CalculatorTable data={revenues} type="revenue" removeItem={removeItem}/>
+                <CalculatorTable data={expenses} type="expense" removeItem={removeItem}/>
             </div>
         </>
     );
